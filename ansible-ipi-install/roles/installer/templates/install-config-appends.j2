@@ -10,3 +10,10 @@ imageContentSources:
 - mirrors:
   - {{ local_registry }}/{{ local_repo }}
   source: quay.io/openshift-release-dev/ocp-release
+{% for item in image_content_source_extras|default([]) %}
+- mirrors:
+{% for mirror in item.mirrors %}
+  - {{ mirror }}
+{% endfor %}
+  source: {{ item.source }}
+{% endfor %}
